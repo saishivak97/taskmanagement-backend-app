@@ -1,0 +1,3 @@
+{
+    "username":"raju","password":"rajubhai6","user_type":"user"
+}
