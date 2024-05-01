@@ -1,0 +1,106 @@
+### API Documentation
+
+#### Introduction
+This API provides functionality to manage tasks and users in a simple task management system. It allows users to register, login, create, update, delete tasks, and retrieve task details.
+
+#### Base URL
+The base URL for accessing the API is `http://localhost:3000/`.
+
+#### Authentication
+The API uses JWT (JSON Web Token) for authentication. Users need to obtain a JWT token by logging in before accessing protected routes.
+
+#### Endpoints
+
+1. **Register User**
+   - **URL:** `/register`
+   - **Method:** POST
+   - **Request Body:**
+     - `username` (string): Username of the user to register.
+     - `password` (string): Password of the user.
+     - `user_type` (string): Type of the user (e.g., "user", "admin").
+   - **Response:**
+     - Status Code: 200 OK - User created successfully.
+     - Status Code: 400 Bad Request - User already exists or password is too short.
+     - Status Code: 500 Internal Server Error - Server error occurred.
+
+2. **Login User**
+   - **URL:** `/login`
+   - **Method:** POST
+   - **Request Body:**
+     - `username` (string): Username of the user.
+     - `password` (string): Password of the user.
+   - **Response:**
+     - Status Code: 200 OK - Successful login. Returns a JWT token.
+     - Status Code: 400 Bad Request - Invalid username or password.
+     - Status Code: 500 Internal Server Error - Server error occurred.
+
+3. **Get User Details**
+   - **URL:** `/users`
+   - **Method:** GET
+   - **Headers:** Authorization token (JWT token)
+   - **Authorization:** Requires user to be authenticated and have a user role ("user" or "admin").
+   - **Response:**
+     - Status Code: 200 OK - Returns a list of all users.
+     - Status Code: 401 Unauthorized - Invalid or missing JWT token.
+     - Status Code: 403 Forbidden - User does not have sufficient role.
+
+4. **Create Task**
+   - **URL:** `/tasks`
+   - **Method:** POST
+   - **Headers:** Authorization token (JWT token)
+   - **Authorization:** Requires user to be authenticated and have an "admin" role.
+   - **Request Body:**
+     - `title` (string): Title of the task.
+     - `description` (string): Description of the task.
+     - `status` (string): Status of the task.
+     - `assignee_id` (integer): ID of the user to whom the task is assigned.
+   - **Response:**
+     - Status Code: 200 OK - Task successfully added.
+     - Status Code: 500 Internal Server Error - Server error occurred.
+
+5. **Update Task**
+   - **URL:** `/tasks/:id`
+   - **Method:** PUT
+   - **Headers:** Authorization token (JWT token)
+   - **Authorization:** Requires user to be authenticated and have an "admin" role.
+   - **Request Parameters:** `id` (integer): ID of the task to update.
+   - **Request Body:**
+     - `title` (string): New title of the task.
+     - `description` (string): New description of the task.
+     - `status` (string): New status of the task.
+     - `assignee_id` (integer): New ID of the user to whom the task is assigned.
+   - **Response:**
+     - Status Code: 200 OK - Task details successfully updated.
+     - Status Code: 500 Internal Server Error - Server error occurred.
+
+6. **Delete Task**
+   - **URL:** `/task/:id`
+   - **Method:** DELETE
+   - **Headers:** Authorization token (JWT token)
+   - **Authorization:** Requires user to be authenticated and have an "admin" role.
+   - **Request Parameters:** `id` (integer): ID of the task to delete.
+   - **Response:**
+     - Status Code: 200 OK - Task successfully deleted.
+     - Status Code: 500 Internal Server Error - Server error occurred.
+
+7. **Get All Tasks**
+   - **URL:** `/tasks`
+   - **Method:** GET
+   - **Headers:** Authorization token (JWT token)
+   - **Authorization:** Requires user to be authenticated and have a "user" or "admin" role.
+   - **Response:**
+     - Status Code: 200 OK - Returns a list of all tasks.
+     - Status Code: 401 Unauthorized - Invalid or missing JWT token.
+     - Status Code: 403 Forbidden - User does not have sufficient role.
+
+8. **Get Specific Task**
+   - **URL:** `/task/:id`
+   - **Method:** GET
+   - **Headers:** Authorization token (JWT token)
+   - **Authorization:** Requires user to be authenticated and have a "user" or "admin" role.
+   - **Request Parameters:** `id` (integer): ID of the task to retrieve.
+   - **Response:**
+     - Status Code: 200 OK - Returns details of the specified task.
+     - Status Code: 401 Unauthorized - Invalid or missing JWT token.
+     - Status Code: 403 Forbidden - User does not have sufficient role.
+     - Status Code: 500 Internal Server Error - Server error occurred.

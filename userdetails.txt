@@ -1,3 +1,8 @@
 {
+    "username":"saishiva","password":"saishiva","user_type":"admin"
+}
+
+{
     "username":"raju","password":"rajubhai6","user_type":"user"
 }
+
